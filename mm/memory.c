@@ -3092,8 +3092,8 @@ static vm_fault_t do_wp_page(struct vm_fault *vmf)
 				 */
 				page_move_anon_rmap(vmf->page, vma);
 			}
-			unlock_page(vmf->page);
 			wp_page_reuse(vmf);
+                        unlock_page(vmf->page);
 			return VM_FAULT_WRITE;
 		}
 		unlock_page(vmf->page);
