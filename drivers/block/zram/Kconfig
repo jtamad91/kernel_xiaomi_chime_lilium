@@ -31,8 +31,12 @@ config ZRAM_DEDUP
 
 choice
 	prompt "Default zram compressor"
-	default ZRAM_DEF_COMP_ZSTD
+	default ZRAM_DEF_COMP_LZORLE
 	depends on ZRAM
+
+config ZRAM_DEF_COMP_LZORLE
+	bool "lzo-rle"
+	depends on CRYPTO_LZO
 
 config ZRAM_DEF_COMP_ZSTD
 	bool "zstd"
@@ -58,6 +62,7 @@ endchoice
 
 config ZRAM_DEF_COMP
 	string
+	default "lzo-rle" if ZRAM_DEF_COMP_LZORLE
 	default "zstd" if ZRAM_DEF_COMP_ZSTD
 	default "lz4" if ZRAM_DEF_COMP_LZ4
 	default "lzo" if ZRAM_DEF_COMP_LZO
